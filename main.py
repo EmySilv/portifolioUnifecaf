@@ -67,6 +67,7 @@ def update_table():
         By.XPATH, "following-sibling::div"
     ).text
 
+    # Formatando os dados
     formattedUmidity = currentUmidityValue.replace("%", "")
     formattedDate = currentDate.split(",")[1].strip()
     formattedDate = datetime.strptime(formattedDate, "%d DE %B")
@@ -115,13 +116,14 @@ def build_chart():
 def build_screen():
     csv_today = f"dados_clima_{datetime.now().strftime('%Y%m%d')}.csv"
     csv_data = get_data_from_csv(csv_today)
+        
 
     root = tk.Tk()
     root.title("Atualizar Previsão do Tempo")
-    root.geometry("500x400")
+    root.geometry("400x300")
 
     btn_atualizar = tk.Button(
-        root, text="Atualizar planilha", font=("Arial", 12), command=update_table
+        root, text="Atualizar tabela", font=("Arial", 12), command=update_table
     )
 
     btn_grafico = tk.Button(
@@ -129,7 +131,7 @@ def build_screen():
     )
 
     lbl_titulo = tk.Label(
-        root, text="Previsão do Tempo", font=("Arial", 14)
+        root, text="Previsão do Tempo (último registro)", font=("Arial", 14)
     )
     
     total_registros = len(csv_data) if csv_data is not None and not csv_data.empty else 0
@@ -141,5 +143,6 @@ def build_screen():
     lbl_rows.pack(pady=5)
 
     root.mainloop()
+
 
 build_screen()
